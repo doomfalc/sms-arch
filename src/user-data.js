@@ -9,21 +9,17 @@ const writeFile = P.promisify(fs.writeFile);
 const storagePath = path.join(app.getPath("userData"), "sms-arch.user.json");
 
 async function load() {
-    try
-    {
+    try {
         const content = await readFile(storagePath);
         return content ? JSON.parse(content.toString()) : {};
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
     }
+    return undefined;
 }
 
 async function write(content) {
-    await writeFile(storagePath, Buffer.from(JSON.stringify(content), "utf8"))
+    await writeFile(storagePath, Buffer.from(JSON.stringify(content), "utf8"));
 }
 
 export { load, write };
-
-//export default class UserData {};
-

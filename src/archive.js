@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 import P from "bluebird";
 import R from "ramda";
 
@@ -16,11 +15,9 @@ export default class Archive {
         const children = R.path(["root", "children"], document);
         const aggregated = this.aggregate(children);
 
-        console.log(aggregated.smsthread);
-
         return {
             smses: aggregated.sms,
-            threads: aggregated.smsthread
+            threads: aggregated.smsthread,
         };
     }
 
@@ -33,7 +30,9 @@ export default class Archive {
                 return reduced;
             }
             if (!reduced[nodeType]) {
+            /* eslint-disable no-param-reassign */
                 reduced[nodeType] = [];
+            /* eslint-enable no-param-reassign */
             }
             reduced[nodeType].push(this.reduceOneEntity(xmlNode));
             return reduced;
@@ -43,8 +42,10 @@ export default class Archive {
     // Reduce all the xml nodes for one SMS or thread into a regular JS object
     reduceOneEntity(item) {
         return item.children.reduce((reduced, child) => {
+            /* eslint-disable no-param-reassign */
             reduced[child.name.toLowerCase()] = child.content;
+            /* eslint-enable no-param-reassign */
             return reduced;
         }, {});
     }
-};
+}

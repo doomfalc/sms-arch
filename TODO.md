@@ -2,9 +2,11 @@
 
 ## TODO
 
-- commonalize subscribe
+- Commonalize subscribe
 - Search
+- Logging
 - Compose ConfigPop with a Visible
 - Themes
-- tests (using ES6 modules...)
-- package
+- Tests (using ES6 modules...)
+- Package
+- React PropTypes

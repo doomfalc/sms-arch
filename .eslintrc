@@ -4,7 +4,11 @@
     "plugin:react/recommended"
   ],    
   "env": {
-    "es6": true
+    "es6": true,
+    "browser": true
+  },
+  "globals": {
+    "dispatcher": true
   },
   "settings": {
     "react": {
@@ -24,13 +28,20 @@
     }
   },
   "rules": {
+    "class-methods-use-this": "off",
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
-    "import/no-unresolved": [2, { "ignore": ["electron"] }],
+    "import/no-unresolved": ["warn", { "ignore": ["electron"] }],
+    "indent": ["error", 4],
+    "jsx-a11y/alt-text": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
     "linebreak-style": 0,
-    "quotes": ["double", "error"],
-    "indent": [4, "error"],
+    "no-bitwise": "off",
+    "quotes": ["error", "double"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-closing-bracket-location": "off",
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error",
+    "react/prop-types": "off"
   }
 }

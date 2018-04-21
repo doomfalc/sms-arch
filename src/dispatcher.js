@@ -11,11 +11,8 @@ export default class Dispatcher {
     }
 
     notify(eventName, ...args) {
-        console.log("Notifying", eventName);
         if (this.subs[eventName]) {
-            this.subs[eventName].forEach(listener => {
-                listener(...args);
-            });
+            this.subs[eventName].forEach(listener => listener(...args));
         }
     }
-};
+}

@@ -1,0 +1,70 @@
+li {
+    list-style-type: none;
+    padding: 5px 5px 10px;
+    margin-top: 10px        ;
+    border-radius: 5px;
+}
+li div {
+    padding: 5px;
+}
+.sms-body0 {
+    width: 100%;
+    text-align: right;
+}
+.sms-body1 {
+    width: 100%;
+    text-align: left;
+}
+.sms-body div {
+    max-width: 80%;
+    display: inline-block;
+}
+.main {
+    width: 50%;
+    max-width: 600px;
+    min-width: 300px;
+    margin: auto;
+}
+.header-col {
+    flex-grow: 0;
+    vertical-align: middle;
+}
+.header-col div {
+    padding: 40% 0;
+}
+.thread-col {
+    min-width: 200px;
+}
+
+.menu div {
+    float: left;
+    margin: 20px 20px 20px 20px;
+}
+
+.config-pop {
+    background: #FFF;
+    border: 1px solid #999999;
+    cursor: default;
+    display: none;
+    position: fixed;
+    text-align: left;
+    width: 50%;
+    max-width: 500px;
+    max-height: 500px;
+    margin: auto;
+    z-index: 50;
+    padding: 25px 25px 20px;
+    overflow-y: scroll;
+    /*left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);*/
+}
+
+.show {
+    display: block!important;
+}
+
+.clearfix {
+    display: block;
+    clear: both;
+}

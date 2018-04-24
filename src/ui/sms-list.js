@@ -2,7 +2,7 @@ import { ipcRenderer, remote } from "electron";
 import moment from "moment";
 import React from "react";
 import ReactDOM from "react-dom";
-import { List, Visible } from "./ui/components/";
+import { List, ListHeader, Visible } from "./ui/components/";
 
 const dispatcher = remote.getGlobal("dispatcher");
 const me = sms => sms.status === "3";
@@ -41,7 +41,11 @@ function attachSmsVisibility(button) {
 }
 
 function attachSmsListItems(smsList) {
-    dispatcher.attach("show-sms", items => smsList.setItems(items));
+    dispatcher.attach("show-sms", ({ items }) => smsList.setItems(items));
+}
+
+function attachSmsHeader(smsHeader) {
+    dispatcher.attach("show-sms", ({ name }) => smsHeader.setContent(name));
 }
 
 function attachThreadList(list) {
@@ -60,14 +64,16 @@ function populateLists({ smses, threads }) {
         return output;
     }, {});
 
-    const onThreadClick = threadId => dispatcher.notify("show-sms", smsesByThreads[threadId]);
+    const onThreadClick = ({ id, name }) => dispatcher.notify("show-sms", { items: smsesByThreads[id], name });
 
     const threadList = (<List
       items={threads}
       format={formatThread}
+      clickParams={item => ({ id: item.id, name: item.displayname })}
       onItemClick={onThreadClick} />);
 
     const smsList = (<div>
+      <ListHeader subscribe={h => attachSmsHeader(h)} />
       <List
         format={formatSms}
         border="border"

@@ -1,4 +1,3 @@
-import R from "ramda";
 import React from "react";
 import ListItem from "./list-item.js";
 
@@ -17,7 +16,13 @@ export default class List extends React.Component {
     }
     render() {
         const rows = this.state.items.map(item =>
-          <ListItem key={item.id} id={item.id} onItemClick={this.props.onItemClick} content={R.omit(["id"], item)} format={this.props.format} />,
+          (<ListItem
+            key={item.id}
+            id={item.id}
+            clickParams={this.props.clickParams}
+            onItemClick={this.props.onItemClick}
+            item={item}
+            format={this.props.format} />),
         );
         return <ul>{rows}</ul>;
     }

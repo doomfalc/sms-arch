@@ -2,6 +2,8 @@
 
 ## TODO
 
+- Load pages of smses
+- Loading indicator on startup / opening file / displaying lists
 - Commonalize subscribe
 - Search
 - Logging

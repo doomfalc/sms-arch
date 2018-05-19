@@ -24,21 +24,35 @@ li div {
     max-width: 600px;
     min-width: 300px;
     margin: auto;
+    margin-top: 50px;
 }
 .header-col {
     flex-grow: 0;
     vertical-align: middle;
 }
+
 .header-col div {
     padding: 40% 0;
 }
-.thread-col {
+
+.list-header {
     min-width: 200px;
+    background: #FFF;
+    padding: 10px 20px;
+}
+
+.thread-item {
+    cursor: pointer;
+}
+
+.menu {
+    position: fixed;
+    top: 0px;
 }
 
 .menu div {
     float: left;
-    margin: 20px 20px 20px 20px;
+    margin: 10px 10px 10px 10px;
 }
 
 .config-pop {

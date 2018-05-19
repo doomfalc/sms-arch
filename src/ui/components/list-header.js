@@ -12,8 +12,6 @@ export default class ListHeader extends React.Component {
         this.setState({ content });
     }
     render() {
-        return (<div className="col border thread-col">
-          <div className="row font-weight-bold">{this.state.content}</div>
-        </div>);
+        return <span className="border list-header font-weight-bold">{this.state.content}</span>;
     }
 }

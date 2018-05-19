@@ -22,6 +22,7 @@ export default class List extends React.Component {
             clickParams={this.props.clickParams}
             onItemClick={this.props.onItemClick}
             item={item}
+            className={this.props.itemClassName}
             format={this.props.format} />),
         );
         return <ul>{rows}</ul>;

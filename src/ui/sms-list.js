@@ -69,17 +69,16 @@ function populateLists({ smses, threads }) {
     const threadList = (<List
       items={threads}
       format={formatThread}
+      itemClassName="thread-item"
       clickParams={item => ({ id: item.id, name: item.displayname })}
       onItemClick={onThreadClick} />);
 
-    const smsList = (<div>
-      <ListHeader subscribe={h => attachSmsHeader(h)} />
-      <List
-        format={formatSms}
-        border="border"
-        subscribe={l => attachSmsListItems(l)}
-        />
-    </div>);
+    const smsList = (<List
+      format={formatSms}
+      border="border"
+      subscribe={l => attachSmsListItems(l)} />);
+
+    const header = <ListHeader subscribe={attachSmsHeader} />;
 
     const backButton = <input type="image" src="assets/arrow64.png" height="32" width="64" onClick={() => dispatcher.notify("back")} />;
 
@@ -94,6 +93,10 @@ function populateLists({ smses, threads }) {
     ReactDOM.render(
       <Visible component={backButton} subscribe={attachSmsVisibility} visible={false} />,
       document.querySelector("#back"),
+    );
+    ReactDOM.render(
+      <Visible component={header} subscribe={attachSmsVisibility} visible={false} />,
+      document.querySelector("#header"),
     );
 }
 

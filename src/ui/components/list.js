@@ -19,7 +19,6 @@ export default class List extends React.Component {
           (<ListItem
             key={item.id}
             id={item.id}
-            clickParams={this.props.clickParams}
             onItemClick={this.props.onItemClick}
             item={item}
             className={this.props.itemClassName}

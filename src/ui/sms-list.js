@@ -64,13 +64,12 @@ function populateLists({ smses, threads }) {
         return output;
     }, {});
 
-    const onThreadClick = ({ id, name }) => dispatcher.notify("show-sms", { items: smsesByThreads[id], name });
+    const onThreadClick = ({ id, displayname }) => dispatcher.notify("show-sms", { items: smsesByThreads[id], name: displayname });
 
     const threadList = (<List
       items={threads}
       format={formatThread}
       itemClassName="thread-item"
-      clickParams={item => ({ id: item.id, name: item.displayname })}
       onItemClick={onThreadClick} />);
 
     const smsList = (<List

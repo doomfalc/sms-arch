@@ -1,47 +1,46 @@
 {
-  "extends": [
-    "eslint-config-airbnb",
-    "plugin:react/recommended"
-  ],    
-  "env": {
-    "es6": true,
-    "browser": true
-  },
-  "globals": {
-    "dispatcher": true
-  },
-  "settings": {
-    "react": {
-      "createClass": "createReactClass",
-      "pragma": "React",
-      "version": "15.0",
-      "flowVersion": "0.53"
+    "extends": [
+        "plugin:react/recommended"
+    ],    
+    "env": {
+        "es6": true,
+        "browser": true
     },
-    "propWrapperFunctions": [ "forbidExtraProps" ]
-  },
-  "plugins": [
-    "react"
-  ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "globals": {
+        "dispatcher": true
+    },
+    "settings": {
+        "react": {
+            "createClass": "createReactClass",
+            "pragma": "React",
+            "version": "15.0",
+            "flowVersion": "0.53"
+        },
+        "propWrapperFunctions": [ "forbidExtraProps" ]
+    },
+    "plugins": [ "react" ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module",
+        "ecmaVersion": 2017
+    },
+    "rules": {
+        "class-methods-use-this": "off",
+        "import/extensions": 0,
+        "import/no-extraneous-dependencies": 0,
+        "import/no-unresolved": ["off", { "ignore": ["electron"], "caseSensitive": false }],
+        "indent": ["error", 4],
+        "jsx-a11y/alt-text": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
+        "linebreak-style": 0,
+        "no-bitwise": "off",
+        "quotes": ["error", "double"],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/jsx-closing-bracket-location": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react/prop-types": "off"
     }
-  },
-  "rules": {
-    "class-methods-use-this": "off",
-    "import/extensions": 0,
-    "import/no-extraneous-dependencies": 0,
-    "import/no-unresolved": ["warn", { "ignore": ["electron"] }],
-    "indent": ["error", 4],
-    "jsx-a11y/alt-text": "off",
-    "jsx-a11y/no-noninteractive-element-interactions": "off",
-    "linebreak-style": 0,
-    "no-bitwise": "off",
-    "quotes": ["error", "double"],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/jsx-closing-bracket-location": "off",
-    "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error",
-    "react/prop-types": "off"
-  }
 }

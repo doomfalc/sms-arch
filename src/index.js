@@ -1,11 +1,11 @@
 import { app, BrowserWindow } from "electron";
+import PubSub from "silly-pubsub";
 import xml from "xml-parser";
+
 import Archive from "./archive";
-import Dispatcher from "./dispatcher";
 import * as userData from "./user-data";
 
-const windows = {};
-const dispatcher = new Dispatcher();
+const dispatcher = new PubSub();
 const initialized = {};
 
 global.dispatcher = dispatcher;
@@ -15,71 +15,37 @@ if (require("electron-squirrel-startup")) { // eslint-disable-line global-requir
     app.quit();
 }
 
-const loadFile = async (filePath, save) => {
-    const archive = await new Archive(xml).load(filePath);
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow;
 
-    if (archive && save) {
-        userData.write({ path: filePath });
-    }
-    dispatcher.notify("archive-loaded", archive);
-};
-
-
-dispatcher.attach("load-file", loadFile);
-dispatcher.attach("initialized", async (ui) => {
-    initialized.list |= ui.list;
-    initialized.config |= ui.config;
-
-    if (initialized.list && initialized.config) {
-        const storedData = await userData.load();
-        if (storedData && storedData.path) {
-            await loadFile(storedData.path, false);
-        } else {
-            dispatcher.notify("toggle-config");
-        }
-    }
-});
-
-const openListWindow = (mainWindow) => {
-    mainWindow.webContents.on("did-finish-load", async () => {
-        mainWindow.webContents.send("init");
-    });
-};
-
-const createWindow = (target, action) => {
-    if (windows[target]) {
-        windows[target] = null;
-    }
+const createWindow = () => {
     // Create the browser window.
-    const window = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
     });
-
+    
     // and load the index.html of the app.
-    window.loadURL(`file://${__dirname}/${target}`);
-
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
+    
     // Open the DevTools.
-    window.webContents.openDevTools();
-
+    mainWindow.webContents.openDevTools();
+    
     // Emitted when the window is closed.
-    window.on("closed", () => {
+    mainWindow.on("closed", () => {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        windows[target] = null;
+        mainWindow = null;
     });
-    windows[target] = window;
-
-    if (action) {
-        action(window);
-    }
+    openListWindow();
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", () => createWindow("index.html", openListWindow));
+app.on("ready", createWindow);
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
@@ -93,7 +59,34 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (windows.length === 0) {
-        createWindow("index.html", openListWindow);
+    if (mainWindow === null) {
+        createWindow();
     }
 });
+
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and import them here.
+
+const loadFile = async (filePath, save) => {
+    const archive = await new Archive(xml).load(filePath);
+    
+    if (archive && save) {
+        userData.write({ path: filePath });
+    }
+    console.log("Publishing archive-loaded");
+    dispatcher.publish("archive-loaded", archive);
+};
+
+dispatcher.subscribe("load-file", loadFile);
+dispatcher.subscribe("initialized", async () => {
+    const storedData = await userData.load();
+    if (storedData && storedData.path) {
+        await loadFile(storedData.path, false);
+    }
+});
+
+const openListWindow = () => {
+    mainWindow.webContents.on("did-finish-load", async () => {
+        mainWindow.webContents.send("init");
+    });
+};
